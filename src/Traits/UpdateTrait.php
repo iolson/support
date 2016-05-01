@@ -16,9 +16,9 @@ trait UpdateTrait
     /**
      * Add a non-required attribute.
      *
-     * This function is used for adding attributes that can be left null or blank and should update the model
+     * This method is used for adding attributes that can be left null or blank and should update the model
      * accordingly. For example a 'subscribedToNewsletter' column has a boolean. If this returns false then it will be
-     * missed on the empty($value) check inside updateAttributes() function. This allows this to be set.
+     * missed on the empty($value) check inside updateAttributes() method. This allows this to be set.
      *
      * @param string $attribute
      *

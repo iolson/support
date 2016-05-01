@@ -102,7 +102,7 @@ trait ValidateTrait
      *
      * @return boolean
      */
-    protected function validate(array $data, $message = null)
+    protected function validate(array $data = [], $message = null)
     {
         $validator = Validator::make(
             $data,
