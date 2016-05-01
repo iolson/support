@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\{{model}}\{{model}}Service;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class {{model}}Controller extends Controller
 {
     /**
-     * Model repository.
+     * @var {{model_lower}}Service
      */
-    protected $repo;
+    protected ${{model_lower}}Service;
 
     /**
      * Construct.
      */
     public function __construct()
     {
-        $this->repo = app()->make('App\Contracts\{{model}}Interface');
+        $this->{{model_lower}}Service = app()->make({{model}}Service::class);
     }
 
     /**

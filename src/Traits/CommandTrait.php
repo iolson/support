@@ -4,6 +4,7 @@ namespace IanOlson\Support\Traits;
 
 use Illuminate\Support\Facades\File;
 use IanOlson\Support\Helpers\ValidateVariableTypeHelper;
+use Illuminate\Support\Str;
 
 trait CommandTrait
 {
@@ -132,14 +133,13 @@ trait CommandTrait
 
         if (isset($this->model) && !is_null($this->getModel())) {
             $stubContent = str_replace('{{model}}', $this->getModel(), File::get($stub));
+            $stubContent = str_replace('{{model_lower}}', Str::lower($this->getModel()), $stubContent);
 
             if (isset($this->table) && !is_null($this->getTable())) {
-                $content = str_replace('{{table}}', $this->getTable(), $stubContent);
+                $stubContent = str_replace('{{table}}', $this->getTable(), $stubContent);
             }
 
-            if (is_null($content)) {
-                $content = $stubContent;
-            }
+            $content = $stubContent;
         }
 
         if (is_null($content)) {

@@ -14,13 +14,14 @@ class CrudGenerate extends Command
     const DIRECTORY_CONTROLLERS = "Http/Controllers";
     const DIRECTORY_EXCEPTION = "Exceptions";
     const DIRECTORY_MODELS = "Models";
-    const DIRECTORY_SERVICES = "Services";
+    const DIRECTORY_SERVICES = "Services/%s";
     const STUB_DIRECTORY = "/stubs/crud/";
     const STUB_SERVICE = "Service";
     const STUB_SERVICE_IMPL = "ServiceImpl";
     const STUB_CONTROLLER = "Controller";
     const STUB_EXCEPTION = "Exception";
     const STUB_MODEL = "Model";
+    const NOT_CREATED = '%s was not created. It either exists or there was an error.';
 
     /**
      * The name and signature of the console command.
@@ -55,11 +56,10 @@ class CrudGenerate extends Command
      */
     private function setupFiles()
     {
-        $this->setupInterface()
-             ->setupController()
+        $this->setupController()
              ->setupException()
              ->setupModel()
-             ->setupRepo();
+             ->setupService();
     }
 
     /**
@@ -70,12 +70,12 @@ class CrudGenerate extends Command
     private function setupInterface()
     {
         try {
-            $this->createDirectory(self::DIRECTORY_SERVICES);
+            $this->createDirectory(sprintf(self::DIRECTORY_SERVICES, $this->getModel()));
         } catch (\ErrorException $e) {
-            $this->warn(self::DIRECTORY_SERVICES . " was not created. It either exists or there was an error.");
+            $this->warn(sprintf(self::NOT_CREATED, sprintf(self::DIRECTORY_SERVICES, $this->getModel())));
         }
         $content = $this->getContent(self::STUB_SERVICE);
-        $this->writeFile($content, self::DIRECTORY_SERVICES, $this->getModel(), 'Service');
+        $this->writeFile($content, sprintf(self::DIRECTORY_SERVICES, $this->getModel()), $this->getModel(), 'Service');
 
         return $this;
     }
@@ -116,7 +116,7 @@ class CrudGenerate extends Command
         try {
             $this->createDirectory(self::DIRECTORY_MODELS);
         } catch (\ErrorException $e) {
-            $this->warn(self::DIRECTORY_MODELS . " was not created. It either exists or there was an error.");
+            $this->warn(sprintf(self::NOT_CREATED, self::DIRECTORY_MODELS));
         }
 
         $content = $this->getContent(self::STUB_MODEL);
@@ -131,16 +131,23 @@ class CrudGenerate extends Command
      *
      * @return $this
      */
-    private function setupRepo()
+    private function setupService()
     {
         try {
-            $this->createDirectory(self::DIRECTORY_SERVICES);
+            $this->createDirectory(sprintf(self::DIRECTORY_SERVICES, $this->getModel()));
         } catch (\ErrorException $e) {
-            $this->warn(self::DIRECTORY_SERVICES . " was not created. It either exists or there was an error.");
+            $this->warn(sprintf(self::NOT_CREATED, sprintf(self::DIRECTORY_SERVICES, $this->getModel())));
         }
 
+        $this->setupInterface();
+
         $content = $this->getContent(self::STUB_SERVICE_IMPL);
-        $this->writeFile($content, self::DIRECTORY_SERVICES, $this->getModel(), 'ServiceImpl');
+        $this->writeFile(
+            $content,
+            sprintf(self::DIRECTORY_SERVICES, $this->getModel()),
+            $this->getModel(),
+            'ServiceImpl'
+        );
 
         return $this;
     }

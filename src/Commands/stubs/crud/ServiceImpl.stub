@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\{{model}};
 
-use App\Services\{{model}}Service;
+use App\Services\{{model}}\{{model}}Service;
 use App\Models\{{model}};
 use IanOlson\Support\Services\CrudServiceBase;
 
