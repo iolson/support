@@ -37,7 +37,6 @@ class ValidateVariableTypeHelper
     public static function isArray($check, $name, $throw = true)
     {
         if (!is_array($check)) {
-
             if ($throw) {
                 self::throwException(sprintf(self::INVALID_VARIABLE_ARRAY, $name));
             }
@@ -61,7 +60,6 @@ class ValidateVariableTypeHelper
     public static function isBool($check, $name, $throw = true)
     {
         if (!is_bool($check)) {
-
             if ($throw) {
                 self::throwException(sprintf(self::INVALID_VARIABLE_BOOL, $name));
             }
@@ -85,7 +83,6 @@ class ValidateVariableTypeHelper
     public static function isInt($check, $name, $throw = true)
     {
         if (!is_int($check)) {
-
             if ($throw) {
                 self::throwException(sprintf(self::INVALID_VARIABLE_INT, $name));
             }
@@ -109,7 +106,6 @@ class ValidateVariableTypeHelper
     public static function isNumeric($check, $name, $throw = true)
     {
         if (!is_numeric($check)) {
-
             if ($throw) {
                 self::throwException(sprintf(self::INVALID_VARIABLE_NUMERIC, $name));
             }
@@ -133,7 +129,6 @@ class ValidateVariableTypeHelper
     public static function isString($check, $name, $throw = true)
     {
         if (!is_string($check)) {
-
             if ($throw) {
                 self::throwException(sprintf(self::INVALID_VARIABLE_STRING, $name));
             }
