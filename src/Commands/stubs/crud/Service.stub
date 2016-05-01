@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Services;
+
+interface {{model}}Service
+{
+    /**
+     * Index of resources.
+     *
+     * @return mixed
+     */
+    public function index();
+
+    /**
+     * Find a resource by ID.
+     *
+     * @param int $id
+     *
+     * @return mixed
+     */
+    public function find($id);
+
+    /**
+     * Create a new resource.
+     *
+     * @param array $data
+     *
+     * @return mixed
+     */
+    public function create(array $data = []);
+
+    /**
+     * Update a resource by ID.
+     *
+     * @param int   $id
+     * @param array $data
+     *
+     * @return mixed
+     */
+    public function update($id, array $data = []);
+
+    /**
+     * Delete a resource by ID.
+     *
+     * @param int $id
+     *
+     * @return mixed
+     */
+    public function delete($id);
+}

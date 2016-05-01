@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Services;
+
+use App\Services\{{model}}Service;
+use App\Models\{{model}};
+use IanOlson\Support\Services\CrudServiceBase;
+
+class {{model}}ServiceImpl extends CrudServiceBase implements {{model}}Service
+{
+    /**
+     * Exception namespace.
+     *
+     * @var string
+     */
+    protected $exception = 'App\Exceptions\{{model}}Exception';
+
+    /**
+     * Model namespace.
+     *
+     * @var string
+     */
+    protected $model = 'App\Models\{{model}}';
+}

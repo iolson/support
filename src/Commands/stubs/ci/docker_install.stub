@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# We need to install dependencies only for Docker
+[[ ! -e /.dockerinit ]] && exit 0
+
+set -xe
+
+# Update
+apt-get update -yqq
+
+# Git
+apt-get install git -yqq
+
+# Zlib
+apt-get install zlib1g-dev
+
+# PHPUnit
+curl -o /usr/local/bin/phpunit https://phar.phpunit.de/phpunit.phar
+chmod +x /usr/local/bin/phpunit
+
+# PHP Extensions
+docker-php-ext-install pdo_mysql
+docker-php-ext-install mbstring
+docker-php-ext-install zip
+
+# Composer
+curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer

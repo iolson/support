@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+
+class {{model}}Controller extends Controller
+{
+    /**
+     * Model repository.
+     */
+    protected $repo;
+
+    /**
+     * Construct.
+     */
+    public function __construct()
+    {
+        $this->repo = app()->make('App\Contracts\{{model}}Interface');
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function index(Request $request)
+    {
+        //
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function create(Request $request)
+    {
+        //
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * @param Request $request
+     * @param int     $id
+     */
+    public function show(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * @param Request $request
+     * @param int     $id
+     */
+    public function edit(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * @param Request $request
+     * @param int     $id
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * @param Request $request
+     * @param int     $id
+     */
+    public function destroy(Request $request, $id)
+    {
+        //
+    }
+}
