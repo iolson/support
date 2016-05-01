@@ -128,7 +128,6 @@ trait CommandTrait
      */
     protected function getContent($type)
     {
-        $content = null;
         $stub = self::COMMAND_DIRECTORY . self::STUB_DIRECTORY . "{$type}.stub";
 
         if (isset($this->model) && !is_null($this->getModel())) {
@@ -138,9 +137,9 @@ trait CommandTrait
             if (isset($this->table) && !is_null($this->getTable())) {
                 $stubContent = str_replace('{{table}}', $this->getTable(), $stubContent);
             }
-
-            $content = $stubContent;
         }
+
+        $content = (isset($stubContent)) ? $stubContent : null;
 
         if (is_null($content)) {
             $content = File::get($stub);
