@@ -17,7 +17,7 @@ composer require iolson/support
 
 ## Documentation
 
-WIP documentation can be found [here](https://github.com/iolson/support/tree/master/docs).
+Documentation can be found [here](https://github.com/iolson/support/tree/master/docs).
 
 ## Changelog
 
