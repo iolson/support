@@ -14,7 +14,8 @@ class CrudGenerate extends Command
     const DIRECTORY_CONTROLLERS = "Http/Controllers";
     const DIRECTORY_EXCEPTION = "Exceptions";
     const DIRECTORY_MODELS = "Models";
-    const DIRECTORY_SERVICES = "Services/%s";
+    const DIRECTORY_SERVICES = "Services";
+    const DIRECTORY_SERVICES_MODEL = "Services/%s";
     const STUB_DIRECTORY = "/stubs/crud/";
     const STUB_SERVICE = "Service";
     const STUB_SERVICE_IMPL = "ServiceImpl";
@@ -70,12 +71,12 @@ class CrudGenerate extends Command
     private function setupInterface()
     {
         try {
-            $this->createDirectory(sprintf(self::DIRECTORY_SERVICES, $this->getModel()));
+            $this->createDirectory(sprintf(self::DIRECTORY_SERVICES_MODEL, $this->getModel()));
         } catch (\ErrorException $e) {
-            $this->warn(sprintf(self::NOT_CREATED, sprintf(self::DIRECTORY_SERVICES, $this->getModel())));
+            $this->warn(sprintf(self::NOT_CREATED, sprintf(self::DIRECTORY_SERVICES_MODEL, $this->getModel())));
         }
         $content = $this->getContent(self::STUB_SERVICE);
-        $this->writeFile($content, sprintf(self::DIRECTORY_SERVICES, $this->getModel()), $this->getModel(), 'Service');
+        $this->writeFile($content, sprintf(self::DIRECTORY_SERVICES_MODEL, $this->getModel()), $this->getModel(), 'Service');
 
         return $this;
     }
@@ -139,12 +140,18 @@ class CrudGenerate extends Command
             $this->warn(sprintf(self::NOT_CREATED, sprintf(self::DIRECTORY_SERVICES, $this->getModel())));
         }
 
+        try {
+            $this->createDirectory(sprintf(self::DIRECTORY_SERVICES_MODEL, $this->getModel()));
+        } catch (\ErrorException $e) {
+            $this->warn(sprintf(self::NOT_CREATED, sprintf(self::DIRECTORY_SERVICES_MODEL, $this->getModel())));
+        }
+
         $this->setupInterface();
 
         $content = $this->getContent(self::STUB_SERVICE_IMPL);
         $this->writeFile(
             $content,
-            sprintf(self::DIRECTORY_SERVICES, $this->getModel()),
+            sprintf(self::DIRECTORY_SERVICES_MODEL, $this->getModel()),
             $this->getModel(),
             'ServiceImpl'
         );

@@ -11,8 +11,20 @@ An opionated support package for Laravel, that provides flexible and reusable he
 
 ## Installation
 
+This package can be installed through Composer.
+
 ```bash
 composer require iolson/support
+```
+
+You must install this service provider.
+
+```php
+// config/app.php
+'providers' => [
+	...,
+	IanOlson\Support\SupportServiceProvider::class,
+];
 ```
 
 ## Documentation
