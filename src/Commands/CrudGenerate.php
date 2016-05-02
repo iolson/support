@@ -76,7 +76,12 @@ class CrudGenerate extends Command
             $this->warn(sprintf(self::NOT_CREATED, sprintf(self::DIRECTORY_SERVICES_MODEL, $this->getModel())));
         }
         $content = $this->getContent(self::STUB_SERVICE);
-        $this->writeFile($content, sprintf(self::DIRECTORY_SERVICES_MODEL, $this->getModel()), $this->getModel(), 'Service');
+        $this->writeFile(
+            $content,
+            sprintf(self::DIRECTORY_SERVICES_MODEL, $this->getModel()),
+            $this->getModel(),
+            'Service'
+        );
 
         return $this;
     }
