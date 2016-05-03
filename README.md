@@ -7,7 +7,7 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/iolson/support.svg?style=flat-square)](https://scrutinizer-ci.com/g/iolson/support)
 [![Total Downloads](https://img.shields.io/packagist/dt/iolson/support.svg?style=flat-square)](https://packagist.org/packages/iolson/support)
 
-An opionated support package for Laravel, that provides flexible and reusable helper methods and traits for commonly used functionalities.
+An opinionated support package for Laravel, that provides flexible and reusable helper methods and traits for commonly used functionality.
 
 ## Installation
 
