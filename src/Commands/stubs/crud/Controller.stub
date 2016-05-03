@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller;
 class {{model}}Controller extends Controller
 {
     /**
-     * @var {{model_lower}}Service
+     * @var {{model}}Service
      */
     protected ${{model_lower}}Service;
 

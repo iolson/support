@@ -132,7 +132,7 @@ trait CommandTrait
 
         if (isset($this->model) && !is_null($this->getModel())) {
             $stubContent = str_replace('{{model}}', $this->getModel(), File::get($stub));
-            $stubContent = str_replace('{{model_lower}}', Str::lower($this->getModel()), $stubContent);
+            $stubContent = str_replace('{{model_lower}}', Str::camel($this->getModel()), $stubContent);
 
             if (isset($this->table) && !is_null($this->getTable())) {
                 $stubContent = str_replace('{{table}}', $this->getTable(), $stubContent);
