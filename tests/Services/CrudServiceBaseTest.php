@@ -19,9 +19,9 @@ class CrudServiceBaseTest extends TestCase
     public function constructor()
     {
         $mockModel = m::mock('Model');
-        $mockRepo = new TestRepo($mockModel);
+        $mockService = new TestRepo($mockModel);
 
-        $this->assertEquals($mockModel, $mockRepo->getModel());
+        $this->assertEquals($mockModel, $mockService->getModel());
     }
 
     /**
@@ -29,20 +29,20 @@ class CrudServiceBaseTest extends TestCase
      */
     public function index()
     {
-        $mockRepo = m::mock(CrudServiceBase::class)->makePartial();
+        $mockService = m::mock(CrudServiceBase::class)->makePartial();
         $mockModel = m::mock('Model');
         $mockModel1 = m::mock('Model2');
         $mockModel2 = m::mock('Model3');
         $mockCollection = new Collection([$mockModel1, $mockModel2]);
 
-        $mockRepo->shouldReceive('createModel')->andReturn($mockModel);
+        $mockService->shouldReceive('createModel')->andReturn($mockModel);
         $mockModel->shouldReceive('newQuery')->andReturn($mockModel);
         $mockModel->shouldReceive('get')->andReturn($mockCollection);
 
-        $this->assertEquals($mockCollection, $mockRepo->index());
-        $this->assertNotTrue($mockRepo->index()->isEmpty());
-        $this->assertEquals($mockModel1, $mockRepo->index()->first());
-        $this->assertEquals($mockModel2, $mockRepo->index()->last());
+        $this->assertEquals($mockCollection, $mockService->index());
+        $this->assertNotTrue($mockService->index()->isEmpty());
+        $this->assertEquals($mockModel1, $mockService->index()->first());
+        $this->assertEquals($mockModel2, $mockService->index()->last());
     }
 
     /**
@@ -50,16 +50,16 @@ class CrudServiceBaseTest extends TestCase
      */
     public function index_EmptyCollection()
     {
-        $mockRepo = m::mock(CrudServiceBase::class)->makePartial();
+        $mockService = m::mock(CrudServiceBase::class)->makePartial();
         $mockModel = m::mock('Model');
         $mockCollection = new Collection();
 
-        $mockRepo->shouldReceive('createModel')->andReturn($mockModel);
+        $mockService->shouldReceive('createModel')->andReturn($mockModel);
         $mockModel->shouldReceive('newQuery')->andReturn($mockModel);
         $mockModel->shouldReceive('get')->andReturn($mockCollection);
 
-        $this->assertEquals($mockCollection, $mockRepo->index());
-        $this->assertTrue($mockRepo->index()->isEmpty());
+        $this->assertEquals($mockCollection, $mockService->index());
+        $this->assertTrue($mockService->index()->isEmpty());
     }
 
     /**
@@ -67,12 +67,12 @@ class CrudServiceBaseTest extends TestCase
      */
     public function find()
     {
-        $mockRepo = m::mock(CrudServiceBase::class)->makePartial();
+        $mockService = m::mock(CrudServiceBase::class)->makePartial();
         $mockModel = m::mock('Model');
 
-        $mockRepo->shouldReceive('find')->once()->andReturn($mockModel);
+        $mockService->shouldReceive('read')->once()->andReturn($mockModel);
 
-        $this->assertEquals($mockModel, $mockRepo->find(1));
+        $this->assertEquals($mockModel, $mockService->read(1));
     }
 
     /**
@@ -80,11 +80,11 @@ class CrudServiceBaseTest extends TestCase
      */
     public function find_Null()
     {
-        $mockRepo = m::mock(CrudServiceBase::class)->makePartial();
+        $mockService = m::mock(CrudServiceBase::class)->makePartial();
 
-        $mockRepo->shouldReceive('find')->once()->andReturnNull();
+        $mockService->shouldReceive('read')->once()->andReturnNull();
 
-        $this->assertNull($mockRepo->find(1));
+        $this->assertNull($mockService->read(1));
     }
 
     /**
@@ -92,18 +92,18 @@ class CrudServiceBaseTest extends TestCase
      */
     public function create()
     {
-        $mockRepo = m::mock(CrudServiceBase::class)->makePartial();
+        $mockService = m::mock(CrudServiceBase::class)->makePartial();
         $mockModel = m::mock('Model');
         $name = 'Hello';
 
         Validator::shouldReceive('make')->once()->andReturn(m::mock(['fails' => false]));
-        $mockRepo->shouldReceive('createModel')->once()->andReturn($mockModel);
+        $mockService->shouldReceive('createModel')->once()->andReturn($mockModel);
         $mockModel->shouldReceive('getFillable')->once()->andReturn(['name']);
         $mockModel->shouldReceive('save')->once()->andReturn($mockModel);
 
-        $mockRepo->addValidationOption('rules', 'name', 'required');
+        $mockService->addValidationOption('rules', 'name', 'required');
 
-        $this->assertEquals($mockModel, $mockRepo->create(compact('name')));
+        $this->assertEquals($mockModel, $mockService->create(compact('name')));
     }
 
     /**
@@ -113,14 +113,14 @@ class CrudServiceBaseTest extends TestCase
     {
         $this->setExpectedException(ValidateException::class, 'Error');
 
-        $mockRepo = m::mock(CrudServiceBase::class)->makePartial();
+        $mockService = m::mock(CrudServiceBase::class)->makePartial();
         $name = null;
 
         Validator::shouldReceive('make')->once()->andReturn(m::mock(['fails' => 'true']));
         Lang::shouldReceive('get')->once()->andReturn('Error');
 
-        $mockRepo->addValidationOption('rules', 'name', 'required');
-        $mockRepo->create(compact('name'));
+        $mockService->addValidationOption('rules', 'name', 'required');
+        $mockService->create(compact('name'));
     }
 
     /**
@@ -128,21 +128,21 @@ class CrudServiceBaseTest extends TestCase
      */
     public function update()
     {
-        $mockRepo = m::mock(CrudServiceBase::class)->makePartial();
+        $mockService = m::mock(CrudServiceBase::class)->makePartial();
         $mockModel = m::mock('Model');
         $name = 'Hello';
 
         Validator::shouldReceive('make')->once()->andReturn(m::mock(['fails' => false]));
-        $mockRepo->shouldReceive('createModel')->once()->andReturn($mockModel);
+        $mockService->shouldReceive('createModel')->once()->andReturn($mockModel);
         $mockModel->shouldReceive('newQuery')->once()->andReturn($mockModel);
         $mockModel->shouldReceive('where')->once()->andReturn($mockModel);
         $mockModel->shouldReceive('first')->once()->andReturn($mockModel);
         $mockModel->shouldReceive('getFillable')->once()->andReturn(['name']);
         $mockModel->shouldReceive('save')->once()->andReturn($mockModel);
 
-        $mockRepo->addValidationOption('rules', 'name', 'required');
+        $mockService->addValidationOption('rules', 'name', 'required');
 
-        $this->assertEquals($mockModel, $mockRepo->update(1, compact('name')));
+        $this->assertEquals($mockModel, $mockService->update(1, compact('name')));
     }
 
     /**
@@ -152,13 +152,13 @@ class CrudServiceBaseTest extends TestCase
     {
         $this->setExpectedException(BaseModelException::class, 'Model could not be found.');
 
-        $mockRepo = m::mock(CrudServiceBase::class)->makePartial();
+        $mockService = m::mock(CrudServiceBase::class)->makePartial();
 
         Lang::shouldReceive('get')->once()->andReturn('Model could not be found.');
-        $mockRepo->shouldReceive('find')->once()->andReturnNull();
-        $mockRepo->shouldReceive('throwException')->once()->andThrow(new BaseModelException(Lang::get('support.exceptions.model.find')));
+        $mockService->shouldReceive('read')->once()->andReturnNull();
+        $mockService->shouldReceive('throwException')->once()->andThrow(new BaseModelException(Lang::get('support.exceptions.model.read')));
 
-        $mockRepo->update(1, []);
+        $mockService->update(1, []);
     }
 
     /**
@@ -168,16 +168,16 @@ class CrudServiceBaseTest extends TestCase
     {
         $this->setExpectedException(ValidateException::class, 'Error');
 
-        $mockRepo = m::mock(CrudServiceBase::class)->makePartial();
+        $mockService = m::mock(CrudServiceBase::class)->makePartial();
         $mockModel = m::mock('Model');
         $name = null;
 
         Validator::shouldReceive('make')->once()->andReturn(m::mock(['fails' => 'true']));
         Lang::shouldReceive('get')->once()->andReturn('Error');
-        $mockRepo->shouldReceive('find')->once()->andReturn($mockModel);
+        $mockService->shouldReceive('read')->once()->andReturn($mockModel);
 
-        $mockRepo->addValidationOption('rules', 'name', 'required');
-        $mockRepo->update(1, compact('name'));
+        $mockService->addValidationOption('rules', 'name', 'required');
+        $mockService->update(1, compact('name'));
     }
 
     /**
@@ -185,13 +185,13 @@ class CrudServiceBaseTest extends TestCase
      */
     public function delete()
     {
-        $mockRepo = m::mock(CrudServiceBase::class)->makePartial();
+        $mockService = m::mock(CrudServiceBase::class)->makePartial();
         $mockModel = m::mock('Model');
 
-        $mockRepo->shouldReceive('find')->once()->andReturn($mockModel);
+        $mockService->shouldReceive('read')->once()->andReturn($mockModel);
         $mockModel->shouldReceive('delete')->once()->andReturn(true);
 
-        $this->assertTrue($mockRepo->delete(1));
+        $this->assertTrue($mockService->delete(1));
     }
 
     /**
@@ -201,13 +201,13 @@ class CrudServiceBaseTest extends TestCase
     {
         $this->setExpectedException(BaseModelException::class, 'Model could not be found.');
 
-        $mockRepo = m::mock(CrudServiceBase::class)->makePartial();
+        $mockService = m::mock(CrudServiceBase::class)->makePartial();
 
         Lang::shouldReceive('get')->once()->andReturn('Model could not be found.');
-        $mockRepo->shouldReceive('find')->once()->andReturnNull();
-        $mockRepo->shouldReceive('throwException')->once()->andThrow(new BaseModelException(Lang::get('support.exceptions.model.find')));
+        $mockService->shouldReceive('read')->once()->andReturnNull();
+        $mockService->shouldReceive('throwException')->once()->andThrow(new BaseModelException(Lang::get('support.exceptions.model.read')));
 
-        $mockRepo->delete(1);
+        $mockService->delete(1);
     }
 }
 

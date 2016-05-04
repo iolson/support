@@ -36,14 +36,6 @@ abstract class CrudServiceBase
     /**
      * {@inheritDoc}
      */
-    public function find($id)
-    {
-        return $this->createModel()->newQuery()->where('id', $id)->first();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function create(array $data = [])
     {
         $this->validate($data);
@@ -60,10 +52,18 @@ abstract class CrudServiceBase
     /**
      * {@inheritDoc}
      */
+    public function read($id)
+    {
+        return $this->createModel()->newQuery()->where('id', $id)->first();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function update($id, array $data = [])
     {
-        if (!$model = $this->find($id)) {
-            $this->throwException(Lang::get('support.exceptions.model.find'));
+        if (!$model = $this->read($id)) {
+            $this->throwException(Lang::get('support.exceptions.model.read'));
         }
 
         $this->validate($data);
@@ -80,8 +80,8 @@ abstract class CrudServiceBase
      */
     public function delete($id)
     {
-        if (!$model = $this->find($id)) {
-            $this->throwException(Lang::get('support.exceptions.model.find'));
+        if (!$model = $this->read($id)) {
+            $this->throwException(Lang::get('support.exceptions.model.read'));
         }
 
         $model->delete();

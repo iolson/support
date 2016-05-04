@@ -8,7 +8,7 @@ return [
             'method' => 'Method is not named correctly with starting with add or remove.',
         ],
         'model'    => [
-            'find' => 'Model could not be found.',
+            'read' => 'Model could not be found.',
         ],
     ],
 ];

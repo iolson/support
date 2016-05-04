@@ -12,15 +12,6 @@ interface {{model}}Service
     public function index();
 
     /**
-     * Find a resource by ID.
-     *
-     * @param int $id
-     *
-     * @return mixed
-     */
-    public function find($id);
-
-    /**
      * Create a new resource.
      *
      * @param array $data
@@ -28,6 +19,15 @@ interface {{model}}Service
      * @return mixed
      */
     public function create(array $data = []);
+
+    /**
+     * Find a resource by ID.
+     *
+     * @param int $id
+     *
+     * @return mixed
+     */
+    public function read($id);
 
     /**
      * Update a resource by ID.
