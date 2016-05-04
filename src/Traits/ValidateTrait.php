@@ -89,7 +89,7 @@ trait ValidateTrait
     {
         $this->checkValidationTypes($type);
 
-        return Arr::get($this->validationOptions, $type);
+        return Arr::get($this->validationOptions, $type, []);
     }
 
     /**
